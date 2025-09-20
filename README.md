@@ -240,6 +240,6 @@ This project demonstrates how to deploy an **Active Directory lab** in Azure:
 
 - Applied Group Policies for security and account management.
 
-Gained hands-on experience troubleshooting AD logs and security events.
+- Gained hands-on experience troubleshooting AD logs and security events.
 
 
