@@ -52,7 +52,7 @@ This project demonstrates how to deploy an **Active Directory lab** in Azure:
 ---
 
 ## **Technologies & Tools**  
-- **Microsoft Azure** (VMs, Networking)  
+- **Microsoft Azure (VMs, Networking)**  
 - **Active Directory Domain Services (AD DS)**  
 - **Group Policy Management**  
 - **PowerShell Scripting**  
