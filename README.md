@@ -60,7 +60,7 @@ This project demonstrates how to deploy an **Active Directory lab** in Azure:
 
 ### Operating Systems  
 - **Windows Server 2022**  
-- **Windows 10**  
+- **Windows 10 (21H2)**  
 
 ---
 
