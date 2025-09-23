@@ -11,27 +11,27 @@ Deploy a fully functional **on-premises Active Directory environment** inside **
 ## **Table of Contents**  
 1. [Overview](#overview)  
 2. [Video Demonstrations](#video-demonstrations)  
-3. [Technologies & Tools](#technologies--tools)  
-4. [High-Level Steps](#high-level-steps)  
-5. [Deployment & Configuration](#deployment--configuration)  
+3. [Technologies & Tools](#technologies--tools)    
+4. [Deployment & Configuration](#deployment--configuration)  
    - [Step 1: Prepare Azure Infrastructure](#step-1-prepare-azure-infrastructure)  
    - [Step 2: Deploy Active Directory](#step-2-deploy-active-directory)  
    - [Step 3: Automate User Creation](#step-3-automate-user-creation)  
    - [Step 4: Group Policy & Account Management](#step-4-group-policy--account-management)  
-6. [Learning Outcomes](#learning-outcomes)  
-7. [Code & Scripts](#code--scripts)  
+5. [Learning Outcomes](#learning-outcomes)  
+6. [Code & Scripts](#code--scripts)  
 
 ---
 
-## **Overview**  
+## **Overview**
 
-This project demonstrates how to deploy an **Active Directory lab** in Azure:  
+This project demonstrates how to deploy a fully functional Active Directory lab in Azure, including domain controllers, client machines, PowerShell automation, and Group Policy management.
 
-- Build a **Virtual Network** with VMs.  
-- Deploy **Windows Server 2022** as a Domain Controller.  
-- Join a **Windows 10 client** to the domain.  
-- Automate user creation with **PowerShell**.  
-- Manage accounts and security with **Group Policy**.  
+Key Steps / Highlights:
+1. Prepare Azure infrastructure: VMs, networking, IP settings.
+2. Deploy Active Directory Domain Services and join client to the domain.
+3. Automate user creation with PowerShell scripts.
+4. Configure and manage users, groups, and policies via Group Policy.
+
 
 ---
 
@@ -61,14 +61,6 @@ This project demonstrates how to deploy an **Active Directory lab** in Azure:
 ### Operating Systems  
 - **Windows Server 2022**  
 - **Windows 10 (21H2)**  
-
----
-
-## **High-Level Steps**  
-1. Prepare Azure infrastructure (VMs, networking, IPs).  
-2. Deploy and configure Active Directory Domain Services.  
-3. Automate user creation with PowerShell.  
-4. Configure and apply Group Policies.  
 
 ---
 
@@ -241,5 +233,74 @@ This project demonstrates how to deploy an **Active Directory lab** in Azure:
 - Applied Group Policies for security and account management.
 
 - Gained hands-on experience troubleshooting AD logs and security events.
+
+
+---
+
+
+
+### ***Code & Scripts***
+
+During this lab, I used a PowerShell script provided by the course to automate the creation of multiple Active Directory users in a test environment. This script allowed me to:
+
+- Bulk-create user accounts in Active Directory.
+- Test login and Group Policy configurations.
+- Practice user and OU management at scale.
+
+  **Provided Script to Generate Users**
+
+  
+```powershell
+$PASSWORD_FOR_USERS   = "Password1"
+$NUMBER_OF_ACCOUNTS_TO_CREATE = 10000
+# ------------------------------------------------------ #
+
+Function generate-random-name() {
+    $consonants = @('b','c','d','f','g','h','j','k','l','m','n','p','q','r','s','t','v','w','x','z')
+    $vowels = @('a','e','i','o','u','y')
+    $nameLength = Get-Random -Minimum 3 -Maximum 7
+    $count = 0
+    $name = ""
+
+    while ($count -lt $nameLength) {
+        if ($($count % 2) -eq 0) {
+            $name += $consonants[$(Get-Random -Minimum 0 -Maximum $($consonants.Count - 1))]
+        }
+        else {
+            $name += $vowels[$(Get-Random -Minimum 0 -Maximum $($vowels.Count - 1))]
+        }
+        $count++
+    }
+
+    return $name
+}
+
+$count = 1
+while ($count -lt $NUMBER_OF_ACCOUNTS_TO_CREATE) {
+    $fisrtName = generate-random-name
+    $lastName = generate-random-name
+    $username = $fisrtName + '.' + $lastName
+    $password = ConvertTo-SecureString $PASSWORD_FOR_USERS -AsPlainText -Force
+
+    Write-Host "Creating user: $($username)" -BackgroundColor Black -ForegroundColor Cyan
+    
+    New-AdUser -AccountPassword $password `
+               -GivenName $firstName `
+               -Surname $lastName `
+               -DisplayName $username `
+               -Name $username `
+               -EmployeeID $username `
+               -PasswordNeverExpires $true `
+               -Path "ou=_EMPLOYEES,$(([ADSI]`"").distinguishedName)" `
+               -Enabled $true
+    $count++
+}
+
+
+
+
+
+
+
 
 
