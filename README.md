@@ -158,7 +158,7 @@ Key Steps / Highlights:
 ### **Step 3: Automate User Creation**  
 - Add domain users to **Remote Desktop Users** group.  
 - Run PowerShell script to bulk-create users.  
-- Test login with sample user accounts.
+- Test login with sample user account (**nose.wed**).
 
 <details>
 <summary>📸 Click to view Step 3 screenshots</summary>
